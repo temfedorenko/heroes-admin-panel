@@ -2,46 +2,60 @@
   "heroes": [
     {
       "id": 1001,
-      "name": "Первый герой",
-      "description": "Первый герой в рейтинге!",
+      "name": "Перший герой",
+      "description": "Перший герой в рейтингу!",
       "element": "fire"
     },
     {
       "id": 1002,
-      "name": "Неизвестный герой",
-      "description": "Скрывающийся в тени",
+      "name": "Невідомий герой",
+      "description": "Той, що ховається в тіні",
       "element": "wind"
     },
     {
       "id": 1003,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
+      "name": "Морський герой",
+      "description": "Як аквамен, лиш не з DC",
       "element": "water"
     },
     {
-      "id": 1004,
-      "name": "John Snow",
-      "description": "Бастард",
-      "element": "fire"
-    },
-    {
       "id": 1005,
-      "name": "Горный герой",
-      "description": "Сильнейший",
+      "name": "Гірський герой",
+      "description": "Найсильніший",
       "element": "earth"
     },
     {
-      "id": "83d59c18-2e19-4f51-97d2-bfc47fd2558c",
-      "name": "Malyshyk",
-      "description": "Kiss and hug",
+      "id": "a0fabce9-f6f5-46f1-b10c-cb13fd22a929",
+      "name": "малышок",
+      "description": "kiss",
       "element": "water"
     }
   ],
   "filters": [
-    "all",
-    "fire",
-    "water",
-    "wind",
-    "earth"
+    {
+      "id": 1,
+      "name": "all",
+      "label": "Всі"
+    },
+    {
+      "id": 2,
+      "name": "fire",
+      "label": "Вогонь"
+    },
+    {
+      "id": 3,
+      "name": "water",
+      "label": "Вода"
+    },
+    {
+      "id": 4,
+      "name": "wind",
+      "label": "Вітер"
+    },
+    {
+      "id": 5,
+      "name": "earth",
+      "label": "Земля"
+    }
   ]
 }

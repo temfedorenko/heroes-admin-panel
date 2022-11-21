@@ -1,25 +1,16 @@
-// Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. Он должен попадать
-// в общее состояние и отображаться в списке + фильтроваться
-// Уникальный идентификатор персонажа можно сгенерировать через uiid
-// Усложненная задача:
-// Персонаж создается и в файле json при помощи метода POST
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
-
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { heroAdded } from "../../actions";
-import { useHttp } from "../../hooks/http.hook";
-
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+
+import { useHttp } from "../../hooks/http.hook";
+import { heroAdded } from "../../actions";
 
 const HeroesAddForm = () => {
   const [heroName, setHeroName] = useState("");
   const [heroDescr, setHeroDescr] = useState("");
   const [heroElement, setHeroElement] = useState("");
 
+  const { filters } = useSelector((state) => state);
   const { request } = useHttp();
   const dispatch = useDispatch();
 
@@ -43,11 +34,19 @@ const HeroesAddForm = () => {
     setHeroElement("");
   };
 
+  const options = filters.slice(1).map(({ id, name, label }) => {
+    return (
+      <option key={id} value={name}>
+        {label}
+      </option>
+    );
+  });
+
   return (
     <form className="border p-4 shadow-lg rounded" onSubmit={onSubmit}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label fs-4">
-          Имя нового героя
+          Імʼя нового героя
         </label>
         <input
           required
@@ -55,31 +54,29 @@ const HeroesAddForm = () => {
           name="name"
           className="form-control"
           id="name"
-          placeholder="Как меня зовут?"
+          placeholder="Як мене звати?"
           value={heroName}
           onChange={(e) => setHeroName(e.target.value)}
         />
       </div>
-
       <div className="mb-3">
         <label htmlFor="text" className="form-label fs-4">
-          Описание
+          Опис
         </label>
         <textarea
           required
           name="text"
           className="form-control"
           id="text"
-          placeholder="Что я умею?"
+          placeholder="Що я вмію?"
           style={{ height: "130px" }}
           value={heroDescr}
           onChange={(e) => setHeroDescr(e.target.value)}
         />
       </div>
-
       <div className="mb-3">
         <label htmlFor="element" className="form-label">
-          Выбрать элемент героя
+          Вибрати елемент героя
         </label>
         <select
           required
@@ -88,16 +85,12 @@ const HeroesAddForm = () => {
           name="element"
           value={heroElement}
           onChange={(e) => setHeroElement(e.target.value)}>
-          <option>Я владею элементом...</option>
-          <option value="fire">Огонь</option>
-          <option value="water">Вода</option>
-          <option value="wind">Ветер</option>
-          <option value="earth">Земля</option>
+          <option>Я володію елементом</option>
+          {options}
         </select>
       </div>
-
       <button type="submit" className="btn btn-primary">
-        Создать
+        Створити
       </button>
     </form>
   );
