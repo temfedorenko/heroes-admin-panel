@@ -17,7 +17,7 @@ import { useHttp } from "../../hooks/http.hook";
 import Spinner from "../spinner/Spinner";
 
 const HeroesFilters = () => {
-  const { activeFilter, filters, filtersLoadingStatus } = useSelector((state) => state);
+  const { activeFilter, filters, filtersLoadingStatus } = useSelector((state) => state.filters);
   const dispatch = useDispatch();
   const { request } = useHttp();
 
@@ -27,8 +27,6 @@ const HeroesFilters = () => {
       .then((data) => dispatch(filtersFetched(data)))
       .catch(() => dispatch(filtersFetchingError()));
   }, []);
-
-  console.log(activeFilter);
 
   if (filtersLoadingStatus === "loading") {
     return <Spinner />;
