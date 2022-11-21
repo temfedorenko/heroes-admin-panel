@@ -3,7 +3,7 @@ import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
-import { heroesFetching, heroesFetched, heroesFetchingError, heroRemoved } from "../../actions";
+import { fetchHeroes, heroRemoved } from "../../actions";
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
 
@@ -22,23 +22,12 @@ const HeroesList = () => {
 
   const filteredHeroes = useSelector(filteredHeroesSelector);
 
-  // const filteredHeroes = useSelector((state) => {
-  //   if (state.filters.activeFilter === "all") {
-  //     return state.heroes.heroes;
-  //   } else {
-  //     return state.heroes.heroes.filter((item) => item.element === state.filters.activeFilter);
-  //   }
-  // });
-  const { heroesLoadingStatus } = useSelector((state) => state);
+  const { heroesLoadingStatus } = useSelector((state) => state.heroes);
   const dispatch = useDispatch();
   const { request } = useHttp();
 
   useEffect(() => {
-    dispatch(heroesFetching());
-    request("http://localhost:3001/heroes")
-      .then((data) => dispatch(heroesFetched(data)))
-      .catch(() => dispatch(heroesFetchingError()));
-
+    dispatch(fetchHeroes(request));
     // eslint-disable-next-line
   }, []);
 
@@ -64,7 +53,9 @@ const HeroesList = () => {
     }
 
     return arr.map(({ id, ...props }) => {
-      return <HeroesListItem key={id} {...props} removeHero={() => removeHero(id)} />;
+      return (
+        <HeroesListItem key={id} {...props} removeHero={() => removeHero(id)} />
+      );
     });
   };
 
