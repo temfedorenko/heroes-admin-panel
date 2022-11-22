@@ -1,19 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFilters } from "../../actions";
-import { activeFilterChanged } from "./filtersSlice";
-import { useHttp } from "../../hooks/http.hook";
+import { activeFilterChanged, fetchFilters } from "./filtersSlice";
 import Spinner from "../spinner/Spinner";
 
 const HeroesFilters = () => {
-  const { activeFilter, filters, filtersLoadingStatus } = useSelector(
-    (state) => state.filters
-  );
+  const { activeFilter, filters, filtersLoadingStatus } = useSelector((state) => state.filters);
   const dispatch = useDispatch();
-  const { request } = useHttp();
 
   useEffect(() => {
-    dispatch(fetchFilters(request));
+    dispatch(fetchFilters());
   }, []);
 
   if (filtersLoadingStatus === "loading") {
@@ -55,13 +50,8 @@ const HeroesFilters = () => {
       return (
         <button
           key={id}
-          className={
-            activeFilter === name
-              ? filterClassName + " active"
-              : filterClassName
-          }
-          onClick={() => dispatch(activeFilterChanged(name))}
-        >
+          className={activeFilter === name ? filterClassName + " active" : filterClassName}
+          onClick={() => dispatch(activeFilterChanged(name))}>
           {label}
         </button>
       );
